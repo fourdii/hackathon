@@ -67,7 +67,7 @@ const NavItem = tw.li`
     text-[#00fff7]
     cursor-pointer
     font-bold
-    text-xl
+    text-lg
     transition-colors
     transition-duration[300ms]
     hover:text-gray-200
@@ -118,7 +118,7 @@ const NavItemLogo = tw.button`
     text-[#00fff7]
     cursor-pointer
     font-bold
-    text-xl
+    text-lg
     transition-colors
     transition-duration[300ms]
     hover:text-gray-200
@@ -197,7 +197,7 @@ export function NavBar() {
     <Container>
       <Logos>
         <NavItemLogo>
-          <img src={logo} alt=""/>
+          <img  src={logo} alt=""/>
         {/* <svg
             xmlns="http://www.w3.org/2000/svg"
             width="24"

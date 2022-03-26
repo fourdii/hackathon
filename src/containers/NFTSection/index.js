@@ -7,10 +7,58 @@ import styled from "styled-components";
 import contract from "../../abi.json";
 import config from "../../config.json";
 import landingImg from "../../images/landing.jpg"
-
+import tw from "twin.macro";
 
 const truncate = (input, len) =>
   input.length > len ? `${input.substring(0, len)}...` : input;
+
+
+  const ConnectButton = styled.button`
+  ${tw`
+  bg-opacity-0
+  // h-full
+  // w-full
+  // my-4
+  // mx-8
+  h-[50px]
+  w-[200px]
+  xl:h-[5vw]
+  xl:w-[15vw]
+  hover:text-gray-300
+ rounded-full
+  bg-cover
+  bg-center
+  bg-no-repeat
+  text-white
+  font-bold
+  text-lg
+  // md:text-2xl
+  lg:text-xl
+  xl:text-2xl
+  text-shadow[#000 1px 0 10px;]
+  tracking-wide
+  font-Source
+  bg-gradient-to-r from-purple-500 to-pink-500
+`};
+`;
+
+const TextContent = styled.p`
+  ${tw`
+       font-bold
+       text-xl
+       text-white
+       text-shadow[#fff 1px 0 10px;]
+      //  my-2
+       flex
+       justify-center
+       font-Source       
+       rounded-lg
+      // px-2       
+    `};
+`;
+
+
+
 
 export const StyledButton = styled.button`
   padding: 10px;
@@ -85,10 +133,10 @@ export const StyledImg = styled.img`
   border-radius: 100%;
   width: 200px;
   @media (min-width: 900px) {
-    width: 250px;
+    width: 500px;
   }
   @media (min-width: 1000px) {
-    width: 300px;
+    width: 600px;
   }
   transition: width 0.5s;
 `;
@@ -124,53 +172,53 @@ function NFTSection() {
     SHOW_BACKGROUND: false,
   });
 
-  // const claimNFTs = () => {
-  //   let cost = CONFIG.WEI_COST;
-  //   let gasLimit = CONFIG.GAS_LIMIT;
-  //   let totalCostWei = String(cost * mintAmount);
-  //   let totalGasLimit = String(gasLimit * mintAmount);
-  //   console.log("Cost: ", totalCostWei);
-  //   console.log("Gas limit: ", totalGasLimit);
-  //   setFeedback(`Minting your ${CONFIG.NFT_NAME}...`);
-  //   setClaimingNft(true);
-  //   blockchain.smartContract.methods
-  //     .mint(mintAmount)
-  //     .send({
-  //       gasLimit: String(totalGasLimit),
-  //       to: CONFIG.CONTRACT_ADDRESS,
-  //       from: blockchain.account,
-  //       value: totalCostWei,
-  //     })
-  //     .once("error", (err) => {
-  //       console.log(err);
-  //       setFeedback("Sorry, something went wrong please try again later.");
-  //       setClaimingNft(false);
-  //     })
-  //     .then((receipt) => {
-  //       console.log(receipt);
-  //       setFeedback(
-  //         `WOW, the ${CONFIG.NFT_NAME} is yours! go visit Opensea.io to view it.`
-  //       );
-  //       setClaimingNft(false);
-  //       dispatch(fetchData(blockchain.account));
-  //     });
-  // };
+  const claimNFTs = () => {
+    let cost = CONFIG.WEI_COST;
+    let gasLimit = CONFIG.GAS_LIMIT;
+    let totalCostWei = String(cost * mintAmount);
+    let totalGasLimit = String(gasLimit * mintAmount);
+    console.log("Cost: ", totalCostWei);
+    console.log("Gas limit: ", totalGasLimit);
+    setFeedback(`Minting your ${CONFIG.NFT_NAME}...`);
+    setClaimingNft(true);
+    blockchain.smartContract.methods
+      .mint(mintAmount)
+      .send({
+        gasLimit: String(totalGasLimit),
+        to: CONFIG.CONTRACT_ADDRESS,
+        from: blockchain.account,
+        value: totalCostWei,
+      })
+      .once("error", (err) => {
+        console.log(err);
+        setFeedback("Sorry, something went wrong please try again later.");
+        setClaimingNft(false);
+      })
+      .then((receipt) => {
+        console.log(receipt);
+        setFeedback(
+          `WOW, the ${CONFIG.NFT_NAME} is yours! go visit Opensea.io to view it.`
+        );
+        setClaimingNft(false);
+        dispatch(fetchData(blockchain.account));
+      });
+  };
 
-  // const decrementMintAmount = () => {
-  //   let newMintAmount = mintAmount - 1;
-  //   if (newMintAmount < 1) {
-  //     newMintAmount = 1;
-  //   }
-  //   setMintAmount(newMintAmount);
-  // };
+  const decrementMintAmount = () => {
+    let newMintAmount = mintAmount - 1;
+    if (newMintAmount < 1) {
+      newMintAmount = 1;
+    }
+    setMintAmount(newMintAmount);
+  };
 
-  // const incrementMintAmount = () => {
-  //   let newMintAmount = mintAmount + 1;
-  //   if (newMintAmount > 10) {
-  //     newMintAmount = 10;
-  //   }
-  //   setMintAmount(newMintAmount);
-  // };
+  const incrementMintAmount = () => {
+    let newMintAmount = mintAmount + 1;
+    if (newMintAmount > 10) {
+      newMintAmount = 10;
+    }
+    setMintAmount(newMintAmount);
+  };
 
   const getData = () => {
     if (blockchain.account !== "" && blockchain.smartContract !== null) {
@@ -189,7 +237,37 @@ function NFTSection() {
     SET_CONFIG(config);
   };
 
+  const changeNetwork = async () => {
+
+    try {
+      await window.ethereum.request({
+        method: 'wallet_switchEthereumChain',
+        params: [{ chainId: '0xa869' }],
+      });
+    } catch (switchError) {
+      // This error code indicates that the chain has not been added to MetaMask.
+      if (switchError.code === 4902) {
+        // try {
+        //   await window.ethereum.request({
+        //     method: 'wallet_addEthereumChain',
+        //     params: [
+        //       {
+        //         chainId: '0xf00',
+        //         chainName: '...',
+        //         rpcUrls: ['https://...'] /* ... */,
+        //       },
+        //     ],
+        //   });
+        // } catch (addError) {
+        //   // handle "add" error
+        // }
+      }
+      // handle other "switch" errors
+    }
+  }
+
   useEffect(() => {
+    changeNetwork();
     getConfig();
   }, []);
 
@@ -205,7 +283,25 @@ function NFTSection() {
         style={{ padding: 24, backgroundColor: "var(--primary)" }}
         //image={CONFIG.SHOW_BACKGROUND ? "/config/images/bg.png" : null}
       >
-        {/* <StyledLogo alt={"logo"} src={"/config/images/logo.png"} /> */}
+         <StyledImg alt={"logo"} src={landingImg} />
+         <s.SpacerSmall />
+         <s.SpacerSmall />
+         <ConnectButton
+                      onClick={(e) => {
+                        e.preventDefault();
+                        dispatch(connect());
+                        getData();
+                      }}
+                    >
+                      CONNECT
+                    </ConnectButton>
+                    <s.SpacerSmall />
+                    <TextContent
+                  style={{ textAlign: "center" }}
+                >
+                 {blockchain.account}
+                </TextContent>
+        {/* <StyledLogo alt={"logo"} src={"/config/images/logo.png"} />
         <s.SpacerSmall />
         <ResponsiveWrapper flex={1} style={{ padding: 24 }} test>
           <s.Container flex={1} jc={"center"} ai={"center"}>
@@ -240,12 +336,12 @@ function NFTSection() {
                 color: "var(--primary-text)",
               }}
             >
-              {/* <StyledLink target={"_blank"} href={CONFIG.SCAN_LINK}> */}
-                {/* {truncate(CONFIG.CONTRACT_ADDRESS, 15)} */}
-              {/* </StyledLink> */}
+              <StyledLink target={"_blank"} href={CONFIG.SCAN_LINK}> 
+                {truncate(CONFIG.CONTRACT_ADDRESS, 15)} 
+             </StyledLink>
             </s.TextDescription>
             <s.SpacerSmall />
-            {/* {Number(data.totalSupply) >= CONFIG.MAX_SUPPLY ? (
+            {Number(data.totalSupply) >= CONFIG.MAX_SUPPLY ? (
               <>
                 <s.TextTitle
                   style={{ textAlign: "center", color: "var(--accent-text)" }}
@@ -370,16 +466,16 @@ function NFTSection() {
                   </>
                 )}
               </>
-            )} */}
+            )}
             <s.SpacerMedium />
           </s.Container>
           <s.SpacerLarge />
           <s.Container flex={1} jc={"center"} ai={"center"}>
-            {/* <StyledImg
+            <StyledImg
               alt={"example"}
               src={"/config/images/example.gif"}
               style={{ transform: "scaleX(-1)" }}
-            /> */}
+            />
           </s.Container>
         </ResponsiveWrapper>
         <s.SpacerMedium />
@@ -405,7 +501,7 @@ function NFTSection() {
             successfully mint your NFT. We recommend that you don't lower the
             gas limit.
           </s.TextDescription>
-        </s.Container>
+        </s.Container> */}
       </s.Container>
     </s.Screen>
   );

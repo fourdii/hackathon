@@ -58,7 +58,7 @@ export const connect = () => {
     // const CONFIG = await configResponse.json();
     
     const CONFIG = config;
-    const abi = contract;
+    //const abi = contract;
     
     const { ethereum } = window;
     const metamaskIsInstalled = ethereum && ethereum.isMetaMask;
@@ -69,18 +69,22 @@ export const connect = () => {
         const accounts = await ethereum.request({
           method: "eth_requestAccounts",
         });
+        console.log(accounts);
         const networkId = await ethereum.request({
           method: "net_version",
         });
+        console.log(networkId);
+        console.log(CONFIG.NETWORK.ID);
+
         if (networkId === CONFIG.NETWORK.ID) {
-          const SmartContractObj = new Web3EthContract(
-            abi,
-            CONFIG.CONTRACT_ADDRESS
-          );
+          // const SmartContractObj = new Web3EthContract(
+          //   abi,
+          //   CONFIG.CONTRACT_ADDRESS
+          // );
           dispatch(
             connectSuccess({
               account: accounts[0],
-              smartContract: SmartContractObj,
+              //smartContract: SmartContractObj,
               web3: web3,
             })
           );
