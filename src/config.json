@@ -1,0 +1,16 @@
+{
+    "CONTRACT_ADDRESS": "",
+    "SCAN_LINK": "",
+    "NETWORK": {
+      "NAME": "Avalanche FUJI C-Chain",
+      "SYMBOL": "AVAX",
+      "ID": "43113"
+    },
+    "NFT_NAME": "Arcade Galaxy",
+    "SYMBOL": "AG",
+    "WHITE_MINT_SUPPLY": 0,
+    "GAS_LIMIT": 200000,
+    "MARKETPLACE": "Opeansea",
+    "MARKETPLACE_LINK": "https://opensea.io/",
+    "SHOW_BACKGROUND": false
+  }

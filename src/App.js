@@ -1,24 +1,45 @@
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import tw from "twin.macro";
+// import { TopSection  } from "./containers/TopSection";
+// import { AboutSection  } from "./containers/AboutSection";
+// import BackgroundImage from "./images/bg.png"
+import styled from "styled-components";
+// import { RoadmapSection } from "./containers/RoadmapSection";
+// import { TeamSection } from "./containers/TeamSection";
+// import { FAQSection } from "./containers/FAQSection";
+import NFTSection  from "./containers/NFTSection";
+import { NavBar } from "./components/Navbar";
+
+
+
+const AppContainer = styled.div`
+  ${tw`
+    flex
+    flex-col
+    w-screen
+    h-auto           
+    bg-cover
+    bg-local
+    bg-opacity-100
+    bg-[#000922]
+    // overflow-x-hidden
+    // overflow-y-auto
+    `};
+`;
+
+
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <AppContainer>
+      {/* <TopSection/> */}
+      <NavBar/>
+      <NFTSection/>
+      {/* <RoadmapSection/>
+      <TeamSection/>
+      <AboutSection/>
+      <FAQSection/> */}
+    </AppContainer>
   );
 }
 
